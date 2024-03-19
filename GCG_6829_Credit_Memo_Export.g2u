@@ -1,0 +1,219 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.Form..Create(BaseForm)
+Gui.Form..Caption("Process Credit Memo")
+Gui.Form..Size(368,77)
+Gui.Form..MinX(0)
+Gui.Form..MinY(0)
+Gui.Form..Position(0,0)
+Gui.Form..AlwaysOnTop(False)
+Gui.Form..FontName("Tahoma")
+Gui.Form..FontSize(8.25)
+Gui.Form..ControlBox(True)
+Gui.Form..MaxButton(True)
+Gui.Form..MinButton(True)
+Gui.Form..MousePointer(0)
+Gui.Form..Moveable(True)
+Gui.Form..Sizeable(False)
+Gui.Form..ShowInTaskBar(True)
+Gui.Form..TitleBar(True)
+Gui.Form..Event(UnLoad,Form_UnLoad)
+Gui.Form.dtpStart.Create(DatePicker)
+Gui.Form.dtpStart.Enabled(True)
+Gui.Form.dtpStart.Visible(True)
+Gui.Form.dtpStart.Zorder(0)
+Gui.Form.dtpStart.Size(100,20)
+Gui.Form.dtpStart.Position(4,22)
+Gui.Form.dtpStart.CheckBox(False)
+Gui.Form.dtpStart.FontName("Tahoma")
+Gui.Form.dtpStart.FontSize(8.25)
+Gui.Form.dtpEnd.Create(DatePicker)
+Gui.Form.dtpEnd.Enabled(True)
+Gui.Form.dtpEnd.Visible(True)
+Gui.Form.dtpEnd.Zorder(0)
+Gui.Form.dtpEnd.Size(100,20)
+Gui.Form.dtpEnd.Position(110,22)
+Gui.Form.dtpEnd.CheckBox(False)
+Gui.Form.dtpEnd.FontName("Tahoma")
+Gui.Form.dtpEnd.FontSize(8.25)
+Gui.Form.lbl1.Create(Label,"From",True,24,13,0,5,5,True,0,"Tahoma",8.25,,0,0)
+Gui.Form.lbl1.BorderStyle(0)
+Gui.Form.lbl2.Create(Label,"To",True,12,13,0,113,6,True,0,"Tahoma",8.25,,0,0)
+Gui.Form.lbl2.BorderStyle(0)
+Gui.Form.cmdProcess.Create(Button)
+Gui.Form.cmdProcess.Enabled(True)
+Gui.Form.cmdProcess.Visible(True)
+Gui.Form.cmdProcess.Zorder(0)
+Gui.Form.cmdProcess.Size(75,23)
+Gui.Form.cmdProcess.Position(213,21)
+Gui.Form.cmdProcess.Caption("Process")
+Gui.Form.cmdProcess.FontName("Tahoma")
+Gui.Form.cmdProcess.FontSize(8.25)
+Gui.Form.cmdProcess.Event(Click,cmdProcess_Click)
+Gui.Form.cmdReport.Create(Button)
+Gui.Form.cmdReport.Enabled(True)
+Gui.Form.cmdReport.Visible(True)
+Gui.Form.cmdReport.Zorder(0)
+Gui.Form.cmdReport.Size(71,23)
+Gui.Form.cmdReport.Position(292,21)
+Gui.Form.cmdReport.Caption("Report")
+Gui.Form.cmdReport.FontName("Tahoma")
+Gui.Form.cmdReport.FontSize(8.25)
+Gui.Form.cmdReport.Event(Click,cmdReport_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+Program.Sub.Main.Start
+'Bryan Pham
+'09/13/2022
+'Customer: CADILLAC PRODUCTS PACKAGING
+'Call: CAD010-32120220633-0
+'Customer wanted to change the scope: they need the credit memo populated to a custom table. And then they asked for a crystal report LOL
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+
+f.ODBC.Connection!con.OpenCompanyConnection
+
+f.Intrinsic.Control.CallSub(checkTable)
+
+gui.Form..Show
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.cmdProcess_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+v.Local.sSQL.Declare
+v.Local.sRet.Declare
+v.Local.dStart.Declare
+v.Local.dEnd.Declare
+v.Local.sDate.Declare
+v.Local.iCnt.Declare
+v.Local.sDateInv.Declare
+v.Local.iSeq.Declare
+v.Local.sSeq.Declare
+v.Local.sFile.Declare
+v.Local.sParamName.Declare
+v.Local.sParamVal.Declare
+v.Local.sStart.Declare
+v.Local.sEnd.Declare
+v.Local.sTime.Declare
+v.Local.sDateRun.Declare
+v.Local.sDesc.Declare
+
+f.Intrinsic.UI.InvokeWaitDialog("Updating data...","Please wait!")
+V.Local.dStart.Set(V.Screen.Form!dtpStart.Value)
+V.Local.dEnd.Set(V.Screen.Form!dtpEnd.Value)
+
+'pull data to a dt
+f.Intrinsic.String.Build("Select RTRIM(A.SALESMAN) as SALESMAN,'' as SM_NAME, B.ORDER_Number,B.ORDER_LINE,RTRIM(B.PART) as PART,'' as PART_DESC, B.QUANTITY_SHIPPED,A.Invoice_Original,A.INVOICE,A.DATE_INVOICE,A.CUSTOMER,A.NAME_CUSTOMER,A.CITY,A.STATE,A.CUSTOMER_PO,B.Extension,B.Commission_Rate,B.Commission_Amount from V_ORDER_HIST_HEAD A left join GCG_Multi_Commission B on A.INVOICE = B.INVOICE where A.CREDIT_MEMO_FLAG = 'Y' and (A.DATE_INVOICE between '{0}' and '{1}') and A.Invoice_Original <> '' order by A.SALESMAN,A.INVOICE",v.Local.dStart.PervasiveDate,v.Local.dEnd.PervasiveDate,v.Local.sSQL)
+
+'then fill required columns from dictionary
+f.Data.DataTable.CreateFromSQL("dtCreditMemo","con",v.Local.sSQL,true)
+f.Data.Dictionary.CreateFromSQL("dSM","con","Select RTRIM(SALESPERSON_CODE),RTRIM(SALESPERSON) from V_SALESPEOPLE")
+f.Data.Dictionary.SetDefaultReturn("dSM","SALESMAN NOT FOUND")
+f.Data.DataTable.FillFromDictionary("dtCreditMemo","dSM","SALESMAN","SM_NAME")
+f.Data.Dictionary.Close("dSM")
+
+f.Data.Dictionary.CreateFromSQL("dPartDesc","con","Select RTRIM(PART),RTRIM(DESCRIPTION) from V_INVENTORY_MSTR")
+f.Data.Dictionary.SetDefaultReturn("dPartDesc","")
+f.Data.DataTable.FillFromDictionary("dtCreditMemo","dPartDesc","PART","PART_DESC")
+f.Data.Dictionary.Close("dPartDesc")
+
+'set user, date and time run
+f.Data.DataTable.AddColumn("dtCreditMemo","USER","String")
+f.Data.DataTable.AddColumn("dtCreditMemo","DATE_RUN","DATE")
+f.Data.DataTable.AddColumn("dtCreditMemo","TIME_RUN","String")
+f.Intrinsic.String.Format(v.ambient.now,"HH:MM:SS",v.local.sTime)
+
+f.Data.DataTable.SetValue("dtCreditMemo",-1,"USER",v.Caller.User,"DATE_RUN",v.Ambient.Date,"TIME_RUN",v.Local.sTime)
+
+'clear out all data
+f.ODBC.Connection!con.Execute("Delete from GCG_6829_Credit_Memo")
+
+'insert new records
+f.Intrinsic.Control.For(v.Local.iCnt,0,v.DataTable.dtCreditMemo.RowCount--,1)
+	v.Local.sDesc.Set(v.DataTable.dtCreditMemo(v.Local.iCnt).PART_DESC!FieldValTrim)
+	f.Intrinsic.UI.ChangeWaitStatus("Updating data...",v.Local.iCnt,0,v.DataTable.dtCreditMemo.RowCount--)
+	f.Intrinsic.String.Format(v.DataTable.dtCreditMemo(v.Local.iCnt).DATE_INVOICE!FieldValTrim,"YYYY-MM-DD",v.Local.sDate)
+	f.Intrinsic.String.Format(v.DataTable.dtCreditMemo(v.Local.iCnt).DATE_RUN!FieldValTrim,"YYYY-MM-DD",v.Local.sDateRun)
+	f.Intrinsic.String.Build("Insert into GCG_6829_Credit_Memo values('{0}','{1}','{2}','{3}','{4}','{5}',{6},'{7}','{8}','{9}','{10}','{11}','{12}','{13}',{14},{15},{16},'{17}','{18}','{19}','{20}')",v.DataTable.dtCreditMemo(v.Local.iCnt).INVOICE!FieldValTrim, v.DataTable.dtCreditMemo(v.Local.iCnt).Invoice_Original!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).ORDER_Number!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).ORDER_LINE!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).PART!FieldValTrim,v.Local.sDesc.PSQLFriendly,v.DataTable.dtCreditMemo(v.Local.iCnt).QUANTITY_SHIPPED!FieldValFloat,v.Local.sDate,v.DataTable.dtCreditMemo(v.Local.iCnt).SALESMAN!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).CUSTOMER!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).NAME_CUSTOMER!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).CUSTOMER_PO!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).CITY!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).STATE!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).Extension!FieldValTrim,v.DataTable.dtCreditMemo(v.Local.iCnt).Commission_Rate!FieldValFloat,v.DataTable.dtCreditMemo(v.Local.iCnt).Commission_Amount!FieldValFloat,v.DataTable.dtCreditMemo(v.Local.iCnt).USER!FieldValTrim,v.Local.sDateRun,v.DataTable.dtCreditMemo(v.Local.iCnt).TIME_RUN!FieldValTrim,v.Caller.Terminal,v.Local.sSQL)
+	f.ODBC.Connection!con.Execute(v.Local.sSQL)
+f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+f.Data.DataTable.Close("dtCreditMemo")
+
+f.Intrinsic.UI.CloseWaitDialog
+
+f.Intrinsic.UI.Msgbox("Credit memo data has been successfully updated to custom table.","Notification")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdProcess_Click.End
+
+Program.Sub.Form_UnLoad.Start
+f.ODBC.Connection!con.Close
+f.Intrinsic.Control.End
+Program.Sub.Form_UnLoad.End
+
+
+Program.Sub.checkTable.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+V.Local.bTable.Declare(Boolean)
+
+F.ODBC.Connection!con.TableExists("GCG_6829_Credit_Memo",V.Local.bTable)
+F.Intrinsic.Control.If(V.Local.bTable,=,False)
+	F.ODBC.Connection!Con.Execute("CREATE TABLE GCG_6829_Credit_Memo(CREDIT_MEMO CHAR(7),ORIGINAL_INVOICE CHAR(7),ORDER_NO CHAR(7),ORDER_LINE CHAR(4), PART CHAR(20), PART_DESC CHAR(30), QUANTITY DOUBLE, DATE_INVOICE DATE,SALESMAN CHAR(3),CUSTOMER CHAR(6),CUST_NAME CHAR(30),CUSTOMER_PO CHAR(15),CITY CHAR(15),STATE CHAR(3),EXTENSION DOUBLE,COMMISSION_RATE DOUBLE,COMMISSION_AMOUNT DOUBLE,USER_RUN CHAR(8),DATE_RUN DATE,TIME_RUN CHAR(8),TERMINAL CHAR(3));")
+F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.checkTable.End
+
+Program.Sub.cmdReport_Click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+V.Local.sSql.Declare(String)
+V.Local.sRow.Declare(String)
+V.Local.iRows.Declare(Long)
+V.Local.i.Declare(Long)
+V.Local.iRowOrd.Declare(Long)
+V.Local.sParam.Declare(String)
+V.Local.sParamVal.Declare(String)
+V.Local.iBI.Declare(Long)
+V.Local.dStart.Declare
+V.Local.dStop.Declare
+
+'they wanted add a crystal report at the last minute, so I added this sub
+V.Local.sParam.Set("Terminal")
+V.Local.sParamVal.Set(V.Caller.Terminal)
+F.Global.BI.GetIDFromName("Commission_CreditMemos.rpt",V.Local.iBI)
+F.Global.BI.PrintReport(V.Local.iBI,0,V.Local.sParam,V.Local.sParamVal,"",False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdReport_Click.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8286.22461$}$1
+${$6$}$bpham$}$20221028133720551$}$Di0riF4Q5RIv6jxva5zSWBaTvp+T0Dt6DfQq+9qPvAuZ9shOn+a6knyS2M4GcHUQwE5s0ZhIFT0=
+Program.Sub.Comments.End
