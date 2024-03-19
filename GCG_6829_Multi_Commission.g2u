@@ -1,0 +1,820 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.SS_Form1..create(BaseForm)
+Gui.SS_Form1..caption("Multiple Commissions")
+Gui.SS_Form1..size(13395,7575)
+Gui.SS_Form1..position(0,0)
+Gui.SS_Form1..event(UnLoad,ss_form1_unload)
+Gui.SS_Form1..forecolor(0)
+Gui.SS_Form1..BackColor(-2147483633)
+Gui.SS_Form1..maxbutton(True)
+Gui.SS_Form1..minbutton(True)
+Gui.SS_Form1..mousepointer(0)
+Gui.SS_Form1..sizeable(True)
+Gui.SS_Form1..MinX(0)
+Gui.SS_Form1..MinY(0)
+Gui.SS_Form1..AlwaysOnTop(False)
+Gui.SS_Form1..FontName("Tahoma")
+Gui.SS_Form1..FontSize(8.25)
+Gui.SS_Form1..ControlBox(True)
+Gui.SS_Form1..Moveable(True)
+Gui.SS_Form1..ShowInTaskBar(True)
+Gui.SS_Form1..TitleBar(True)
+Gui.SS_Form1.lbl_dtpStart.create(label,"Starting Invoice Date",True,1800,200,1,100,135,True,0,"Arial",8,-2147483633,0,0)
+Gui.SS_Form1.lbl_dtpStart.BorderStyle(0)
+Gui.SS_Form1.dtpStart.create(datepicker)
+Gui.SS_Form1.dtpStart.size(1800,345)
+Gui.SS_Form1.dtpStart.position(100,335)
+Gui.SS_Form1.dtpStart.Enabled(True)
+Gui.SS_Form1.dtpStart.Visible(True)
+Gui.SS_Form1.dtpStart.Zorder(0)
+Gui.SS_Form1.dtpStart.CheckBox(False)
+Gui.SS_Form1.dtpStart.FontName("Tahoma")
+Gui.SS_Form1.dtpStart.FontSize(8.25)
+Gui.SS_Form1.lbl_dtpStop.create(label,"Ending Invoice Date",True,1800,200,1,1985,135,True,0,"Arial",8,-2147483633,0,0)
+Gui.SS_Form1.lbl_dtpStop.BorderStyle(0)
+Gui.SS_Form1.dtpStop.create(datepicker)
+Gui.SS_Form1.dtpStop.size(1800,345)
+Gui.SS_Form1.dtpStop.position(1985,335)
+Gui.SS_Form1.dtpStop.Enabled(True)
+Gui.SS_Form1.dtpStop.Visible(True)
+Gui.SS_Form1.dtpStop.Zorder(0)
+Gui.SS_Form1.dtpStop.CheckBox(False)
+Gui.SS_Form1.dtpStop.FontName("Tahoma")
+Gui.SS_Form1.dtpStop.FontSize(8.25)
+Gui.SS_Form1.cmdSelect.create(button)
+Gui.SS_Form1.cmdSelect.caption("Select")
+Gui.SS_Form1.cmdSelect.size(1000,360)
+Gui.SS_Form1.cmdSelect.position(3870,335)
+Gui.SS_Form1.cmdSelect.event(Click,cmdselect_click)
+Gui.SS_Form1.cmdSelect.Enabled(True)
+Gui.SS_Form1.cmdSelect.Visible(True)
+Gui.SS_Form1.cmdSelect.Zorder(0)
+Gui.SS_Form1.cmdSelect.FontName("Tahoma")
+Gui.SS_Form1.cmdSelect.FontSize(8.25)
+Gui.SS_Form1.cmdSave.create(button)
+Gui.SS_Form1.cmdSave.caption("Save")
+Gui.SS_Form1.cmdSave.size(1005,360)
+Gui.SS_Form1.cmdSave.position(90,6630)
+Gui.SS_Form1.cmdSave.event(Click,cmdsave_click)
+Gui.SS_Form1.cmdSave.Enabled(True)
+Gui.SS_Form1.cmdSave.Visible(True)
+Gui.SS_Form1.cmdSave.Zorder(0)
+Gui.SS_Form1.cmdSave.FontName("Tahoma")
+Gui.SS_Form1.cmdSave.FontSize(8.25)
+Gui.SS_Form1.cmdSave.Anchor(6)
+Gui.SS_Form1.cmdUpdate.create(button)
+Gui.SS_Form1.cmdUpdate.caption("Update")
+Gui.SS_Form1.cmdUpdate.size(1005,360)
+Gui.SS_Form1.cmdUpdate.position(1170,6630)
+Gui.SS_Form1.cmdUpdate.event(Click,cmdupdate_click)
+Gui.SS_Form1.cmdUpdate.Enabled(True)
+Gui.SS_Form1.cmdUpdate.Visible(True)
+Gui.SS_Form1.cmdUpdate.Zorder(0)
+Gui.SS_Form1.cmdUpdate.FontName("Tahoma")
+Gui.SS_Form1.cmdUpdate.FontSize(8.25)
+Gui.SS_Form1.cmdUpdate.Anchor(6)
+Gui.SS_Form1.cmdReport.create(button)
+Gui.SS_Form1.cmdReport.caption("Report")
+Gui.SS_Form1.cmdReport.size(1005,360)
+Gui.SS_Form1.cmdReport.position(2250,6630)
+Gui.SS_Form1.cmdReport.event(Click,cmdreport_click)
+Gui.SS_Form1.cmdReport.Enabled(True)
+Gui.SS_Form1.cmdReport.Visible(True)
+Gui.SS_Form1.cmdReport.Zorder(0)
+Gui.SS_Form1.cmdReport.FontName("Tahoma")
+Gui.SS_Form1.cmdReport.FontSize(8.25)
+Gui.SS_Form1.cmdReport.Anchor(6)
+Gui.SS_Form1.GSGC_Comm.Create(GsGridControl)
+Gui.SS_Form1.GSGC_Comm.Enabled(True)
+Gui.SS_Form1.GSGC_Comm.Visible(True)
+Gui.SS_Form1.GSGC_Comm.Zorder(0)
+Gui.SS_Form1.GSGC_Comm.Size(13230,5835)
+Gui.SS_Form1.GSGC_Comm.Position(105,735)
+Gui.SS_Form1.GSGC_Comm.Event(CellValueChanged,GSGC_Comm_CellValueChanged)
+Gui.SS_Form1.GSGC_Comm.Anchor(15)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Variable.UDT.uInvoice.Define("Salesperson",String)
+Variable.UDT.uInvoice.Define("Invoice_Total",Float)
+Variable.UDT.uInvoice.Define("Comm_Pay",Float)
+Variable.UDT.uInvoice.Define("Invoice",String)
+Variable.UDT.uInvoice.Define("Customer",String)
+Variable.UDT.uInvoice.Define("Invoice_Date",String)
+Variable.UDT.uInvoice.Define("Order",String)
+Variable.uGlobal.uInvoice.Declare("uInvoice")
+Program.Sub.Preflight.End
+Program.Sub.Main.Start
+'Programmer: Bryan Pham
+'10/28/2022
+'Customer: Cadillac Products Packaging
+'CAD010-32120220633-0
+'Rewrite the program and also account for credit memos (it is another script)
+
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+f.ODBC.Connection!con.OpenCompanyConnection
+Gui.SS_Form1..Show
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.cmdselect_click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare
+V.Local.sSql.Declare(String)
+V.Local.dStart.Declare(Date)
+V.Local.dStop.Declare(Date)
+V.Local.iRows.Declare(Long)
+V.Local.iRowOrd.Declare(Long)
+V.Local.fAmt.Declare(Float)
+v.Local.iCnt.Declare
+v.Local.sRet.Declare
+v.Local.bNum.Declare
+v.Local.bMulti.Declare
+
+
+V.Local.dStart.Set(V.Screen.SS_Form1!dtpStart.Value)
+V.Local.dStop.Set(V.Screen.SS_Form1!dtpStop.Value)
+
+f.Intrinsic.UI.InvokeWaitDialog("Loading data...","Please wait!")
+f.Intrinsic.Control.If(v.DataTable.dtComm.Exists,=,True)
+	f.Data.DataTable.Close("dtComm")
+f.Intrinsic.Control.EndIf
+'BP- switch to datatable
+f.Intrinsic.String.Build("Select INVOICE, ORDER_NO, ORDER_LINE, CUSTOMER, DATE_INVOICE, SALESPERSON, PART, PRODUCT_LINE, COMMISSION_TYPE, EXTENSION, cast(0 as float) as Commission_Rate, cast(0 as float) as Commission_Amount,ORDER_SUFFIX,QTY_ORDERED, QTY_SHIPPED from V_ORDER_HIST_LINE where DATE_INVOICE between '{0}' and '{1}'",V.Local.dStart.PervasiveDate,V.Local.dStop.PervasiveDate,V.Local.sSql)
+
+f.Data.DataTable.CreateFromSQL("dtComm","con",v.Local.sSql,true)
+
+f.Intrinsic.Control.For(v.Local.iCnt,0,v.DataTable.dtComm.RowCount--,1)
+
+	f.Intrinsic.String.Build("Select Commission_Rate,Commission_Amount from GCG_Multi_Commission where Invoice = '{0}' and Order_Number = '{1}' and Order_Suffix = '{2}' and Order_Line = '{3}'",v.DataTable.dtComm(v.Local.iCnt).INVOICE!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).ORDER_NO!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).ORDER_SUFFIX!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).ORDER_LINE!FieldValTrim,V.Local.sSql)
+	'if the invoice is in the table and it has commission rate, use it
+	f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+	f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,False)
+		f.Intrinsic.String.IsInString(v.Local.sRet,"#","True",v.Local.bMulti)
+		f.Intrinsic.Control.If(v.Local.bMulti.Not)
+			f.Intrinsic.String.Split(v.Local.sRet,"*!*",v.Local.sRet)
+			f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",v.Local.sRet(0),"Commission_Amount",v.Local.sRet(1))
+		f.Intrinsic.Control.EndIf
+		
+	f.Intrinsic.Control.Else
+		F.Intrinsic.Control.SelectCase(v.DataTable.dtComm(v.Local.iCnt).COMMISSION_TYPE!FieldValTrim)
+		'FLAT - use the commission set for part
+		F.Intrinsic.Control.Case("FLAT")
+			f.Intrinsic.String.Build("Select TEXT_INFO2 from V_INVENTORY_MST2 where RTRIM(PART) = '{0}'",v.DataTable.dtComm(v.Local.iCnt).PART!FieldValTrim,v.Local.sSql)
+			f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+			f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,True)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",0,"Commission_Amount",0)
+			f.Intrinsic.Control.Else
+				f.Intrinsic.Math.IsNumeric(v.Local.sRet,v.Local.bNum)
+				f.Intrinsic.Control.If(v.Local.bNum,=,True)
+					f.Intrinsic.Math.Mult(v.Local.sRet,v.DataTable.dtComm(v.Local.iCnt).QTY_SHIPPED!FieldValFloat,V.Local.fAmt)
+					F.Intrinsic.Math.Round(V.Local.fAmt,2,V.Local.fAmt)
+					f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",v.Local.sRet,"Commission_Amount",V.Local.fAmt)
+				f.Intrinsic.Control.Else
+					f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",0,"Commission_Amount",0)
+				f.Intrinsic.Control.EndIf
+			f.Intrinsic.Control.EndIf
+		'CUST - use the commission set for customer
+		F.Intrinsic.Control.Case("CUST")
+			f.Intrinsic.String.Build("Select COMM_RATE from V_COMMISSION_CP where RTRIM(PART_NO) = '{0}' and RTRIM(CUST_NO)= '{1}'",v.DataTable.dtComm(v.Local.iCnt).PART!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).CUSTOMER!FieldValTrim,v.Local.sSql)
+			f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+			f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,True)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",0,"Commission_Amount",0)
+			f.Intrinsic.Control.Else
+				f.Intrinsic.Math.Mult(v.Local.sRet,v.DataTable.dtComm(v.Local.iCnt).EXTENSION!FieldValFloat,V.Local.fAmt)
+				F.Intrinsic.Math.Round(V.Local.fAmt,2,V.Local.fAmt)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",v.Local.sRet,"Commission_Amount",V.Local.fAmt)
+			f.Intrinsic.Control.EndIf
+		'PERC - use the commission set for part	
+		F.Intrinsic.Control.Case("PERC")
+			f.Intrinsic.String.Build("Select TEXT_INFO2 from V_INVENTORY_MST2 where RTRIM(PART) = '{0}'",v.DataTable.dtComm(v.Local.iCnt).PART!FieldValTrim,v.Local.sSql)
+			f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+			f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,True)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",0,"Commission_Amount",0)
+			f.Intrinsic.Control.Else
+				f.Intrinsic.Math.IsNumeric(v.Local.sRet,v.Local.bNum)
+				f.Intrinsic.Control.If(v.Local.bNum,=,True)
+					f.Intrinsic.Math.Mult(v.Local.sRet,v.DataTable.dtComm(v.Local.iCnt).EXTENSION!FieldValFloat,V.Local.fAmt)
+					F.Intrinsic.Math.Round(V.Local.fAmt,2,V.Local.fAmt)
+					f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",v.Local.sRet,"Commission_Amount",V.Local.fAmt)
+				f.Intrinsic.Control.Else
+					f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",0,"Commission_Amount",0)
+				f.Intrinsic.Control.EndIf
+			f.Intrinsic.Control.EndIf
+		'PROD - use the commission set for salesperson			
+		F.Intrinsic.Control.Case("PROD")
+			f.Intrinsic.String.Build("Select COMMISSION_RATE from V_COMMISSION_RATE where RTRIM(SALESPERSON) = '{0}' and RTRIM(PRODUCT_LINE) = '{1}'",v.DataTable.dtComm(v.Local.iCnt).SALESPERSON!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).PRODUCT_LINE!FieldValTrim,v.Local.sSql)
+			f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+			f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,True)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",0,"Commission_Amount",0)
+			f.Intrinsic.Control.Else
+				f.Intrinsic.Math.Mult(v.Local.sRet,v.DataTable.dtComm(v.Local.iCnt).EXTENSION!FieldValFloat,V.Local.fAmt)
+				F.Intrinsic.Math.Round(V.Local.fAmt,2,V.Local.fAmt)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",v.Local.sRet,"Commission_Amount",V.Local.fAmt)
+			f.Intrinsic.Control.EndIf
+		'Else - use the commission set for salesperson	
+		F.Intrinsic.Control.CaseElse
+			f.Intrinsic.String.Build("Select COMMISSION_RATE from V_COMMISSION_RATE where RTRIM(SALESPERSON) = '{0}' and RTRIM(PRODUCT_LINE) = '{1}' and COMMISSION_TYPE = '{2}'",v.DataTable.dtComm(v.Local.iCnt).SALESPERSON!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).PRODUCT_LINE!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).COMMISSION_TYPE!FieldValTrim,v.Local.sSql)
+			f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+			f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,True)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",0,"Commission_Amount",0)
+			f.Intrinsic.Control.Else
+				f.Intrinsic.Math.Mult(v.Local.sRet,v.DataTable.dtComm(v.Local.iCnt).EXTENSION!FieldValFloat,V.Local.fAmt)
+				F.Intrinsic.Math.Round(V.Local.fAmt,2,V.Local.fAmt)
+				f.Data.DataTable.SetValue("dtComm",v.Local.iCnt,"Commission_Rate",v.Local.sRet,"Commission_Amount",V.Local.fAmt)
+			f.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.Control.EndSelect
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.iCnt)
+f.Intrinsic.UI.CloseWaitDialog
+f.Intrinsic.Control.CallSub(loadGV_Comm)
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}{1}Invoices: {6}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,v.DataTable.dtComm(v.Local.iCnt).INVOICE!FieldValTrim,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+
+Program.Sub.cmdselect_click.End
+
+Program.Sub.ss_form1_unload.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+F.ODBC.Connection!con.Close
+F.Intrinsic.Control.End
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.ss_form1_unload.End
+
+Program.Sub.cmdsave_click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+V.Local.sSql.Declare(String)
+V.Local.sRow.Declare(String)
+V.Local.iRows.Declare(Long)
+V.Local.iRowOrd.Declare(Long)
+V.Local.i.Declare(Long)
+v.Local.sRet.Declare
+v.Local.fComm.Declare
+v.Local.iCnt.Declare
+
+'if users change the rate, save it back to table
+
+f.Intrinsic.Control.If(v.DataTable.dtComm.Exists,=,True,and,v.DataTable.dtComm.RowCount,>,0)
+
+	f.Intrinsic.UI.InvokeWaitDialog("Updating commission...","Please wait!")
+	f.Intrinsic.Control.For(v.Local.iCnt,0,v.DataTable.dtComm.RowCount--,1)
+	
+	'		'========================BP==============
+	'		f.Intrinsic.String.Build("Select RTRIM(CREDIT_MEMO_FLAG),RTRIM(INVOICE_ORIGINAL) from V_ORDER_HIST_HEAD where INVOICE = '{0}'",V.Local.sRow(0).Trim,v.Local.sSql)
+	'		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+	'		f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,False)
+	'			f.Intrinsic.String.Split(v.Local.sRet,"*!*",v.Local.sRet)
+	'			f.Intrinsic.Control.If(v.Local.sRet(0),=,"Y",and,v.Local.sRet(1),<>,"")
+	'				f.Intrinsic.String.Build("Select Commission_Amount from GCG_Multi_Commission where Invoice = '{0}'",v.Local.sRet(1),v.Local.sSql)
+	'				f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.fComm)
+	'				f.Intrinsic.Math.Add(v.Local.fComm,V.Local.sRow(11).Float,v.Local.fComm)
+	'				f.Intrinsic.String.Build("Update GCG_Multi_Commission set Commission_Amount = {0} where Invoice = '{1}'",v.Local.fComm,v.Local.sRet(1),v.Local.sSql)
+	'				f.ODBC.Connection!con.Execute(v.Local.sSql)
+	'			f.Intrinsic.Control.EndIf
+	'		f.Intrinsic.Control.EndIf
+	'		'=======================================
+	
+		'========================BP==============
+'		f.Intrinsic.String.Build("Select RTRIM(CREDIT_MEMO_FLAG),RTRIM(INVOICE_ORIGINAL) from V_ORDER_HIST_HEAD where INVOICE = '{0}'",v.DataTable.dtComm(v.Local.iCnt).INVOICE!FieldValTrim,v.Local.sSql)
+'		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.sRet)
+'		f.Intrinsic.Control.If(v.Ambient.ExecuteAndReturnEOF,=,False)
+'			f.Intrinsic.String.Split(v.Local.sRet,"*!*",v.Local.sRet)
+'			f.Intrinsic.Control.If(v.Local.sRet(0),=,"Y",and,v.Local.sRet(1),<>,"")
+'				f.Intrinsic.String.Build("Select Commission_Amount from GCG_Multi_Commission where Invoice = '{0}'",v.Local.sRet(1),v.Local.sSql)
+'				f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSql,v.Local.fComm)
+'				f.Intrinsic.String.Build("Select Commission_Amount from GCG_Multi_Commission where Invoice = '{0}'",v.DataTable.dtComm(v.Local.iCnt).INVOICE!FieldValTrim,v.Local.sSql)
+'				
+'				f.Intrinsic.Math.Add(v.Local.fComm,v.DataTable.dtComm(v.Local.iCnt).Commission_Amount!FieldValFloat,v.Local.fComm)
+'				f.Intrinsic.String.Build("Update GCG_Multi_Commission set Commission_Amount = {0} where Invoice = '{1}'",v.Local.fComm,v.Local.sRet(1),v.Local.sSql)
+'				f.ODBC.Connection!con.Execute(v.Local.sSql)
+'			f.Intrinsic.Control.EndIf
+'		f.Intrinsic.Control.EndIf
+		'=======================================
+			
+		f.Intrinsic.String.Build("Select * from GCG_Multi_Commission where RTRIM(Invoice) = '{0}' and RTRIM(Order_Number) = '{1}' and RTRIM(Order_Suffix) = '{2}' and RTRIM(Order_Line) = '{3}'",v.DataTable.dtComm(v.Local.iCnt).INVOICE!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).ORDER_NO!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).ORDER_SUFFIX!FieldValTrim,v.DataTable.dtComm(v.Local.iCnt).ORDER_LINE!FieldValTrim,V.Local.sSql)
+		F.ODBC.Connection!con.OpenLocalRecordsetRW("rst",V.Local.sSql)
+		F.Intrinsic.Control.If(V.ODBC.con!rst.EOF,=,True)
+			F.ODBC.con!rst.AddNew
+			F.ODBC.con!rst.Set!INVOICE(v.DataTable.dtComm(v.Local.iCnt).INVOICE!FieldValTrim)
+			F.ODBC.con!rst.Set!Order_Number(v.DataTable.dtComm(v.Local.iCnt).ORDER_NO!FieldValTrim)
+			F.ODBC.con!rst.Set!Order_Suffix(v.DataTable.dtComm(v.Local.iCnt).Order_Suffix!FieldValTrim)
+			F.ODBC.con!rst.Set!Order_Line(v.DataTable.dtComm(v.Local.iCnt).ORDER_LINE!FieldValTrim)
+			F.ODBC.con!rst.Set!Customer(v.DataTable.dtComm(v.Local.iCnt).Customer!FieldValTrim)
+			
+			F.ODBC.con!rst.Set!Date_Invoice(v.DataTable.dtComm(v.Local.iCnt).Date_Invoice!FieldValTrim)
+			F.ODBC.con!rst.Set!Salesperson(v.DataTable.dtComm(v.Local.iCnt).Salesperson!FieldValTrim)
+			F.ODBC.con!rst.Set!Part(v.DataTable.dtComm(v.Local.iCnt).Part!FieldValTrim)
+			F.ODBC.con!rst.Set!Product_Line(v.DataTable.dtComm(v.Local.iCnt).Product_Line!FieldValTrim)
+			F.ODBC.con!rst.Set!Commission_Type(v.DataTable.dtComm(v.Local.iCnt).Commission_Type!FieldValTrim)
+			F.ODBC.con!rst.Set!Extension(v.DataTable.dtComm(v.Local.iCnt).Extension!FieldValFloat)
+			F.ODBC.con!rst.Set!Quantity_Shipped(v.DataTable.dtComm(v.Local.iCnt).QTY_SHIPPED!FieldValFloat)
+			'F.ODBC.con!rst.Set!Quantity_Ordered(v.DataTable.dtComm(v.Local.iCnt).QTY_ORDERED!FieldValFloat)
+
+		F.Intrinsic.Control.EndIf
+		F.ODBC.con!rst.Set!Commission_Rate(v.DataTable.dtComm(v.Local.iCnt).Commission_Rate!FieldValFloat)
+		F.ODBC.con!rst.Set!Commission_Amount(v.DataTable.dtComm(v.Local.iCnt).Commission_Amount!FieldValFloat)
+		F.ODBC.con!rst.Update
+		F.ODBC.con!rst.Close
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	
+	f.Intrinsic.UI.CloseWaitDialog
+f.Intrinsic.Control.Else
+	f.Intrinsic.UI.Msgbox("There is no data to process.","Attention!")
+f.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+
+Program.Sub.cmdsave_click.End
+
+Program.Sub.cmdupdate_click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+V.Local.iRet.Declare(Long)
+V.Local.sRow.Declare(String)
+V.Local.iRows.Declare(Long)
+V.Local.iRowOrd.Declare(Long)
+V.Local.i.Declare(Long)
+V.Local.sInvDate.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.iUB.Declare(Long)
+V.Local.sFile.Declare(String)
+V.Local.sWrite.Declare(String)
+V.Local.bChk.Declare(Boolean)
+V.Local.sInvTotal.Declare(String)
+V.Local.sCommPay.Declare(String)
+V.Local.sFiller.Declare(String)
+V.Local.sExecute.Declare(String)
+V.Local.sSql.Declare(String)
+
+V.uGlobal.uInvoice.Redim(-1,-1)
+'update all the changes to GSS
+F.Intrinsic.UI.Msgbox("Are you sure you want to upload selected records to Global Shop?","Upload Confirmation",4,V.Local.iRet)
+
+F.Intrinsic.Control.If(V.Local.iRet,=,6)
+	F.Intrinsic.Control.CallSub(Cmdsave_click)
+	'BP - switch to datatable
+	f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dtComm.RowCount--,1)
+		F.Intrinsic.Control.If(V.uGlobal.uInvoice.UBound,=,-1)
+			V.uGlobal.uInvoice.Redim(0,0)
+			V.uGlobal.uInvoice!Customer.Set(v.DataTable.dtComm(v.Local.i).Customer!FieldValTrim)
+			V.uGlobal.uInvoice!Invoice.Set(v.DataTable.dtComm(v.Local.i).Invoice!FieldValTrim)
+			F.Intrinsic.String.Format(v.DataTable.dtComm(v.Local.i).Date_Invoice!FieldValTrim,"YYMMDD",V.Local.sInvDate)
+			V.uGlobal.uInvoice!Invoice_Date.Set(V.Local.sInvDate)
+			V.uGlobal.uInvoice!Salesperson.Set(v.DataTable.dtComm(v.Local.i).Salesperson!FieldValTrim)
+			V.uGlobal.uInvoice!Order.Set(v.DataTable.dtComm(v.Local.i).ORDER_NO!FieldValTrim)
+			V.uGlobal.uInvoice!Invoice_Total.Set(v.DataTable.dtComm(v.Local.i).Extension!FieldValFloat)
+			V.uGlobal.uInvoice!Comm_Pay.Set(v.DataTable.dtComm(v.Local.i).Commission_Amount!FieldValFloat)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.Variable.UDTSeek(V.uGlobal.uInvoice!Invoice,v.DataTable.dtComm(v.Local.i).Invoice!FieldValTrim,0,V.Local.sRet)
+			F.Intrinsic.Control.If(V.Local.sRet,=,"")
+				V.Local.iUB.Set(V.uGlobal.uInvoice.UBound)
+				F.Intrinsic.Math.Add(V.Local.iUB,1,V.Local.iUB)
+				V.uGlobal.uInvoice.RedimPreserve(0,V.Local.iUB)
+				V.uGlobal.uInvoice(V.Local.iUB)!Customer.Set(v.DataTable.dtComm(v.Local.i).Customer!FieldValTrim)
+				V.uGlobal.uInvoice(V.Local.iUB)!Invoice.Set(v.DataTable.dtComm(v.Local.i).Invoice!FieldValTrim)
+				F.Intrinsic.String.Format(v.DataTable.dtComm(v.Local.i).Date_Invoice!FieldValTrim,"YYMMDD",V.Local.sInvDate)
+				V.uGlobal.uInvoice(V.Local.iUB)!Invoice_Date.Set(V.Local.sInvDate)
+				V.uGlobal.uInvoice(V.Local.iUB)!Salesperson.Set(v.DataTable.dtComm(v.Local.i).Salesperson!FieldValTrim)
+				V.uGlobal.uInvoice(V.Local.iUB)!Order.Set(v.DataTable.dtComm(v.Local.i).ORDER_NO!FieldValTrim)
+				V.uGlobal.uInvoice(V.Local.iUB)!Invoice_Total.Set(v.DataTable.dtComm(v.Local.i).Extension!FieldValFloat)
+				V.uGlobal.uInvoice(V.Local.iUB)!Comm_Pay.Set(v.DataTable.dtComm(v.Local.i).Commission_Amount!FieldValFloat)
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Math.Add(V.uGlobal.uInvoice(V.Local.sRet.Long)!Invoice_Total,v.DataTable.dtComm(v.Local.i).Extension!FieldValFloat,V.uGlobal.uInvoice(V.Local.sRet.Long)!Invoice_Total)
+				F.Intrinsic.Math.Add(V.uGlobal.uInvoice(V.Local.sRet.Long)!Comm_Pay,v.DataTable.dtComm(v.Local.i).Commission_Amount!FieldValFloat,V.uGlobal.uInvoice(V.Local.sRet.Long)!Comm_Pay)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+	
+	f.Intrinsic.Control.Next(v.Local.i)
+	
+'	Gui.SS_Form1.gsfgComm.ReadRow(1,V.Local.sRow)
+'	F.Intrinsic.String.Split(V.Local.sRow,"*!*",V.Local.sRow)
+'	F.Intrinsic.Control.If(V.Local.sRow(0),<>,"")
+'		V.Local.iRows.Set(V.Screen.SS_Form1!gsfgComm.Rows)
+'		F.Intrinsic.Control.For(V.Local.i,2,V.Local.iRows,1)
+'			F.Intrinsic.Math.Sub(V.Local.i,1,V.Local.iRowOrd)
+'			Gui.SS_Form1.gsfgComm.ReadRow(V.Local.iRowOrd,V.Local.sRow)
+'			F.Intrinsic.String.Split(V.Local.sRow,"*!*",V.Local.sRow)
+'			F.Intrinsic.Control.If(V.uGlobal.uInvoice.UBound,=,-1)
+'				V.uGlobal.uInvoice.Redim(0,0)
+'				V.uGlobal.uInvoice!Customer.Set(V.Local.sRow(3).Trim)
+'				V.uGlobal.uInvoice!Invoice.Set(V.Local.sRow(0).Trim)
+'				F.Intrinsic.String.Format(V.Local.sRow(4),"YYMMDD",V.Local.sInvDate)
+'				V.uGlobal.uInvoice!Invoice_Date.Set(V.Local.sInvDate)
+'				V.uGlobal.uInvoice!Salesperson.Set(V.Local.sRow(5).Trim)
+'				V.uGlobal.uInvoice!Order.Set(V.Local.sRow(1).Trim)
+'				V.uGlobal.uInvoice!Invoice_Total.Set(V.Local.sRow(9).Float)
+'				V.uGlobal.uInvoice!Comm_Pay.Set(V.Local.sRow(11).Float)
+'			F.Intrinsic.Control.Else
+'				F.Intrinsic.Variable.UDTSeek(V.uGlobal.uInvoice!Invoice,V.Local.sRow(0).Trim,0,V.Local.sRet)
+'				F.Intrinsic.Control.If(V.Local.sRet,=,"")
+'					V.Local.iUB.Set(V.uGlobal.uInvoice.UBound)
+'					F.Intrinsic.Math.Add(V.Local.iUB,1,V.Local.iUB)
+'					V.uGlobal.uInvoice.RedimPreserve(0,V.Local.iUB)
+'					V.uGlobal.uInvoice(V.Local.iUB)!Customer.Set(V.Local.sRow(3).Trim)
+'					V.uGlobal.uInvoice(V.Local.iUB)!Invoice.Set(V.Local.sRow(0).Trim)
+'					F.Intrinsic.String.Format(V.Local.sRow(4),"YYMMDD",V.Local.sInvDate)
+'					V.uGlobal.uInvoice(V.Local.iUB)!Invoice_Date.Set(V.Local.sInvDate)
+'					V.uGlobal.uInvoice(V.Local.iUB)!Salesperson.Set(V.Local.sRow(5).Trim)
+'					V.uGlobal.uInvoice(V.Local.iUB)!Order.Set(V.Local.sRow(1).Trim)
+'					V.uGlobal.uInvoice(V.Local.iUB)!Invoice_Total.Set(V.Local.sRow(9).Float)
+'					V.uGlobal.uInvoice(V.Local.iUB)!Comm_Pay.Set(V.Local.sRow(11).Float)
+'				F.Intrinsic.Control.Else
+'					F.Intrinsic.Math.Add(V.uGlobal.uInvoice(V.Local.sRet.Long)!Invoice_Total,V.Local.sRow(9).Float,V.uGlobal.uInvoice(V.Local.sRet.Long)!Invoice_Total)
+'					F.Intrinsic.Math.Add(V.uGlobal.uInvoice(V.Local.sRet.Long)!Comm_Pay,V.Local.sRow(11).Float,V.uGlobal.uInvoice(V.Local.sRet.Long)!Comm_Pay)
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.EndIf
+'		F.Intrinsic.Control.Next(V.Local.i)
+
+		F.Intrinsic.Control.If(V.uGlobal.uInvoice.UBound,>,-1)
+			F.Intrinsic.String.Concat(V.Caller.FilesDir,"\OE-COMMISSIONS.txt",V.Local.sFile)
+			F.Intrinsic.File.Exists(V.Local.sFile,V.Local.bChk)
+			F.Intrinsic.Control.If(V.Local.bChk,=,True)
+				F.Intrinsic.File.DeleteFile(V.Local.sFile)
+			F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.For(V.Local.i,V.uGlobal.uInvoice.LBound,V.uGlobal.uInvoice.UBound,1)
+				F.Intrinsic.String.Concat("Update ORDER_HIST_LINE Set FLAG_COMM_BUILT = 'Y' where INVOICE = '",V.uGlobal.uInvoice(V.Local.i)!Invoice,"'",V.Local.sSql)
+				F.ODBC.Connection!con.Execute(V.Local.sSql)
+				F.Intrinsic.String.RPad(V.uGlobal.uInvoice(V.Local.i)!Customer," ",6,V.uGlobal.uInvoice(V.Local.i)!Customer)
+				F.Intrinsic.String.RPad(V.uGlobal.uInvoice(V.Local.i)!Salesperson," ",3,V.uGlobal.uInvoice(V.Local.i)!Salesperson)
+				F.Intrinsic.String.Format(V.uGlobal.uInvoice(V.Local.i)!Invoice_Total,"0000000000.00",V.Local.sInvTotal)
+				F.Intrinsic.String.Format(V.uGlobal.uInvoice(V.Local.i)!Comm_Pay,"0000000000.00",V.Local.sCommPay)
+				F.Intrinsic.String.RPad(V.Local.sFiller," ",69,V.Local.sFiller)
+				F.Intrinsic.Control.If(V.Local.sWrite,=,"")
+					F.Intrinsic.String.Concat(V.uGlobal.uInvoice(V.Local.i)!Customer,V.uGlobal.uInvoice(V.Local.i)!Invoice,V.uGlobal.uInvoice(V.Local.i)!Invoice_Date,V.uGlobal.uInvoice(V.Local.i)!Salesperson,V.uGlobal.uInvoice(V.Local.i)!Order,V.Local.sInvTotal,V.Local.sCommPay,V.Local.sFiller,V.Local.sWrite)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.String.Concat(V.Local.sWrite,V.Ambient.NewLine,V.uGlobal.uInvoice(V.Local.i)!Customer,V.uGlobal.uInvoice(V.Local.i)!Invoice,V.uGlobal.uInvoice(V.Local.i)!Invoice_Date,V.uGlobal.uInvoice(V.Local.i)!Salesperson,V.uGlobal.uInvoice(V.Local.i)!Order,V.Local.sInvTotal,V.Local.sCommPay,V.Local.sFiller,V.Local.sWrite)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Next(V.Local.i)
+			
+			F.Intrinsic.File.String2File(V.Local.sFile,V.Local.sWrite)
+			F.Intrinsic.String.Concat(V.Ambient.QuadQuote,V.Caller.CompanyCode,"1UPLOCOMN",V.Ambient.QuadQuote,V.Local.sExecute)
+			F.Intrinsic.Task.LaunchGSSSync("UPL001A"," -c",V.Local.sExecute)
+			F.Intrinsic.Control.CallSub(Cmdselect_click)
+		F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+
+Program.Sub.cmdupdate_click.End
+
+Program.Sub.cmdreport_click.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+V.Local.sSql.Declare(String)
+V.Local.sRow.Declare(String)
+V.Local.iRows.Declare(Long)
+V.Local.i.Declare(Long)
+V.Local.iRowOrd.Declare(Long)
+V.Local.sParam.Declare(String)
+V.Local.sParamVal.Declare(String)
+V.Local.iBI.Declare(Long)
+V.Local.dStart.Declare
+V.Local.dStop.Declare
+
+'print the report
+V.Local.dStart.Set(V.Screen.SS_Form1!dtpStart.Value)
+V.Local.dStop.Set(V.Screen.SS_Form1!dtpStop.Value)
+
+F.Intrinsic.Control.CallSub(Cmdsave_click)
+F.Intrinsic.String.Concat("Delete from GCG_Multi_Com_Report where Terminal = '",V.Caller.Terminal,"'",V.Local.sSql)
+F.ODBC.Connection!con.Execute(V.Local.sSql)
+
+f.Intrinsic.Control.If(v.DataTable.dtComm.RowCount,>,0)
+	V.Local.sSql.Set("Select * From GCG_Multi_Com_Report")
+	F.ODBC.Connection!con.OpenLocalRecordsetRW("rst",V.Local.sSql)
+	f.Intrinsic.Control.For(V.Local.i,0,v.DataTable.dtComm.RowCount--,1)
+		F.ODBC.con!rst.AddNew
+		F.ODBC.con!rst.Set!Terminal(V.Caller.Terminal)
+		F.ODBC.con!rst.Set!INVOICE(v.DataTable.dtComm(v.Local.i).INVOICE!FieldValTrim)
+		F.ODBC.con!rst.Set!Order_Number(v.DataTable.dtComm(v.Local.i).ORDER_NO!FieldValTrim)
+		F.ODBC.con!rst.Set!Order_Suffix(v.DataTable.dtComm(v.Local.i).Order_Suffix!FieldValTrim)
+		F.ODBC.con!rst.Set!Order_Line(v.DataTable.dtComm(v.Local.i).Order_Line!FieldValTrim)
+		F.ODBC.con!rst.Set!Customer(v.DataTable.dtComm(v.Local.i).CUSTOMER!FieldValTrim)
+		F.ODBC.con!rst.Set!Date_Invoice(v.DataTable.dtComm(v.Local.i).Date_Invoice!FieldValTrim)
+		F.ODBC.con!rst.Set!Salesperson(v.DataTable.dtComm(v.Local.i).SALESPERSON!FieldValTrim)
+		F.ODBC.con!rst.Set!Part(v.DataTable.dtComm(v.Local.i).Part!FieldValTrim)
+		F.ODBC.con!rst.Set!Product_Line(v.DataTable.dtComm(v.Local.i).Product_Line!FieldValTrim)
+		F.ODBC.con!rst.Set!Commission_Type(v.DataTable.dtComm(v.Local.i).Commission_Type!FieldValTrim)
+		F.ODBC.con!rst.Set!Extension(v.DataTable.dtComm(v.Local.i).Extension!FieldValFloat)
+		F.ODBC.con!rst.Set!Quantity_Shipped(v.DataTable.dtComm(v.Local.i).QTY_SHIPPED!FieldValFloat)
+		F.ODBC.con!rst.Set!Commission_Rate(v.DataTable.dtComm(v.Local.i).Commission_Rate!FieldValFloat)
+		F.ODBC.con!rst.Set!Commission_Amount(v.DataTable.dtComm(v.Local.i).Commission_Amount!FieldValFloat)
+		F.ODBC.con!rst.Update
+	f.Intrinsic.Control.Next(v.Local.i)
+	F.ODBC.con!rst.Close
+f.Intrinsic.Control.EndIf
+
+f.Intrinsic.String.Build("Select INVOICE, ORDER_NO, ORDER_LINE, CUSTOMER, DATE_INVOICE, SALESPERSON, PART, PRODUCT_LINE, COMMISSION_TYPE, EXTENSION, cast(0 as float) as Commission_Rate, cast(0 as float) as Commission_Amount,ORDER_SUFFIX,QTY_ORDERED, QTY_SHIPPED from V_ORDER_HIST_LINE where DATE_INVOICE between '{0}' and '{1}'",V.Local.dStart.PervasiveDate,V.Local.dStop.PervasiveDate,V.Local.sSql)
+
+'Gui.SS_Form1.gsfgComm.ReadRow(1,V.Local.sRow)
+'F.Intrinsic.String.Split(V.Local.sRow,"*!*",V.Local.sRow)
+'F.Intrinsic.Control.If(V.Local.sRow(0),<>,"")
+'	V.Local.iRows.Set(V.Screen.SS_Form1!gsfgComm.Rows)
+'	V.Local.sSql.Set("Select * From GCG_Multi_Com_Report")
+'	F.ODBC.Connection!con.OpenLocalRecordsetRW("rst",V.Local.sSql)
+'	F.Intrinsic.Control.For(V.Local.i,2,V.Local.iRows,1)
+'		F.Intrinsic.Math.Sub(V.Local.i,1,V.Local.iRowOrd)
+'		Gui.SS_Form1.gsfgComm.ReadRow(V.Local.iRowOrd,V.Local.sRow)
+'		F.Intrinsic.String.Split(V.Local.sRow,"*!*",V.Local.sRow)
+'		F.ODBC.con!rst.AddNew
+'		F.ODBC.con!rst.Set!Terminal(V.Caller.Terminal)
+'		F.ODBC.con!rst.Set!INVOICE(V.Local.sRow(0).Trim)
+'		F.ODBC.con!rst.Set!Order_Number(V.Local.sRow(1).Trim)
+'		F.ODBC.con!rst.Set!Order_Suffix(V.Local.sRow(12).Trim)
+'		F.ODBC.con!rst.Set!Order_Line(V.Local.sRow(2).Trim)
+'		F.ODBC.con!rst.Set!Customer(V.Local.sRow(3).Trim)
+'		F.ODBC.con!rst.Set!Date_Invoice(V.Local.sRow(4))
+'		F.ODBC.con!rst.Set!Salesperson(V.Local.sRow(5).Trim)
+'		F.ODBC.con!rst.Set!Part(V.Local.sRow(6).Trim)
+'		F.ODBC.con!rst.Set!Product_Line(V.Local.sRow(7).Trim)
+'		F.ODBC.con!rst.Set!Commission_Type(V.Local.sRow(8).Trim)
+'		F.ODBC.con!rst.Set!Extension(V.Local.sRow(9).Float)
+'		F.ODBC.con!rst.Set!Quantity_Shipped(V.Local.sRow(13).Float)
+'		'F.ODBC.con!rst.Set!Quantity_Ordered(V.Local.sRow(13).Float)
+'		F.ODBC.con!rst.Set!Commission_Rate(V.Local.sRow(10).Float)
+'		F.ODBC.con!rst.Set!Commission_Amount(V.Local.sRow(11).Float)
+'		F.ODBC.con!rst.Update
+'	F.Intrinsic.Control.Next(V.Local.i)
+'	F.ODBC.con!rst.Close
+'F.Intrinsic.Control.EndIf
+
+V.Local.sParam.Set("Terminal")
+V.Local.sParamVal.Set(V.Caller.Terminal)
+F.Global.BI.GetIDFromName("GCG_Multi_Commission.rpt",V.Local.iBI)
+F.Global.BI.PrintReport(V.Local.iBI,0,V.Local.sParam,V.Local.sParamVal,"",False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+
+Program.Sub.cmdreport_click.End
+
+Program.Sub.gsfgcomm_posttextmatrix.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+V.Local.sType.Declare(String)
+V.Local.fRate.Declare(Float)
+V.Local.fAmount.Declare(Float)
+V.Local.fQtyShip.Declare(Float)
+V.Local.fExtension.Declare(Float)
+
+F.Intrinsic.Control.SelectCase(V.Args.Column)
+	F.Intrinsic.Control.Case(10)
+		Gui.SS_Form1.gsfgComm.GetTextMatrix(V.Args.Column,V.Args.Key,V.Local.fRate)
+		Gui.SS_Form1.gsfgComm.GetTextMatrix(8,V.Args.Key,V.Local.sType)
+		Gui.SS_Form1.gsfgComm.GetTextMatrix(9,V.Args.Key,V.Local.fExtension)
+		F.Intrinsic.Control.If(V.Local.sType.Trim,=,"FLAT")
+			Gui.SS_Form1.gsfgComm.GetTextMatrix(13,V.Args.Key,V.Local.fQtyShip)
+			F.Intrinsic.Math.Mult(V.Local.fRate,V.Local.fQtyShip,V.Local.fAmount)
+			'F.Intrinsic.Math.Add(V.Local.fAmount,V.Local.fExtension,V.Local.fAmount)
+			F.Intrinsic.Math.Round(V.Local.fAmount,2,V.Local.fAmount)
+			Gui.SS_Form1.gsfgComm.TextMatrix(11,V.Args.Key,V.Local.fAmount)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.Math.Mult(V.Local.fRate,V.Local.fExtension,V.Local.fAmount)
+			F.Intrinsic.Math.Round(V.Local.fAmount,2,V.Local.fAmount)
+			Gui.SS_Form1.gsfgComm.TextMatrix(11,V.Args.Key,V.Local.fAmount)
+		F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Case(11)
+
+		Gui.SS_Form1.gsfgComm.GetTextMatrix(8,V.Args.Key,V.Local.sType)
+		Gui.SS_Form1.gsfgComm.GetTextMatrix(9,V.Args.Key,V.Local.fExtension)
+		Gui.SS_Form1.gsfgComm.GetTextMatrix(11,V.Args.Key,V.Local.fAmount)
+		F.Intrinsic.Control.If(V.Local.sType.Trim,=,"FLAT")
+			Gui.SS_Form1.gsfgComm.GetTextMatrix(13,V.Args.Key,V.Local.fQtyShip)
+			F.Intrinsic.Math.Div(V.Local.fAmount,V.Local.fQtyShip,V.Local.fRate)
+			F.Intrinsic.Math.Round(V.Local.fRate,2,V.Local.fRate)
+			Gui.SS_Form1.gsfgComm.TextMatrix(10,V.Args.Key,V.Local.fRate)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.Math.Div(V.Local.fAmount,V.Local.fExtension,V.Local.fRate)
+			F.Intrinsic.Math.Round(V.Local.fRate,2,V.Local.fRate)
+			Gui.SS_Form1.gsfgComm.TextMatrix(10,V.Args.Key,V.Local.fRate)
+		F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+
+Program.Sub.gsfgcomm_posttextmatrix.End
+
+Program.Sub.GSGC_Comm_CellValueChanged.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+V.Local.sType.Declare(String)
+V.Local.fRate.Declare(Float)
+V.Local.fAmount.Declare(Float)
+V.Local.fQtyShip.Declare(Float)
+V.Local.fExtension.Declare(Float)
+'BP - when users change something in the grid
+F.Intrinsic.Control.SelectCase(V.Args.Column)
+	F.Intrinsic.Control.Case("Commission_Rate")
+		gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","Commission_Rate",V.Args.RowIndex,V.Local.fRate)
+		gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","Commission_Type",V.Args.RowIndex,V.Local.sType)
+		gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","Extension",V.Args.RowIndex,V.Local.fExtension)
+		F.Intrinsic.Control.If(V.Local.sType.Trim,=,"FLAT")
+			gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","QTY_SHIPPED",V.Args.RowIndex,V.Local.fQtyShip)
+			F.Intrinsic.Math.Mult(V.Local.fRate,V.Local.fQtyShip,V.Local.fAmount)
+			F.Intrinsic.Math.Round(V.Local.fAmount,2,V.Local.fAmount)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.Math.Mult(V.Local.fRate,V.Local.fExtension,V.Local.fAmount)
+			F.Intrinsic.Math.Round(V.Local.fAmount,2,V.Local.fAmount)
+		F.Intrinsic.Control.EndIf
+		f.Data.DataTable.SetValue("dtComm",V.Args.RowIndex,"Commission_Amount",V.Local.fAmount)
+
+	F.Intrinsic.Control.Case("Commission_Amount")
+		gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","Commission_Amount",V.Args.RowIndex,V.Local.fAmount)
+		gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","Commission_Type",V.Args.RowIndex,V.Local.sType)
+		gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","Extension",V.Args.RowIndex,V.Local.fExtension)
+		
+		F.Intrinsic.Control.If(V.Local.sType.Trim,=,"FLAT")
+			gui.SS_Form1.GSGC_Comm.GetCellValueByColumnName("GVComm","QTY_SHIPPED",V.Args.RowIndex,V.Local.fQtyShip)
+			F.Intrinsic.Math.Div(V.Local.fAmount,V.Local.fQtyShip,V.Local.fRate)
+			F.Intrinsic.Math.Round(V.Local.fRate,2,V.Local.fRate)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.Math.Div(V.Local.fAmount,V.Local.fExtension,V.Local.fRate)
+			F.Intrinsic.Math.Round(V.Local.fRate,2,V.Local.fRate)
+		F.Intrinsic.Control.EndIf
+		f.Data.DataTable.SetValue("dtComm",V.Args.RowIndex,"Commission_Rate",V.Local.fRate)
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.GSGC_Comm_CellValueChanged.End
+Program.Sub.loadGV_Comm.Start
+F.Intrinsic.Control.Try
+V.Local.sError.Declare(String)
+Gui.SS_Form1.GSGC_Comm.AddGridviewFromDataTable("GVComm","dtComm")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","INVOICE","Caption","Invoice")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","INVOICE","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","INVOICE","MinWidth","80")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","INVOICE","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","INVOICE","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","INVOICE","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_NO","Caption","Order No.")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_NO","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_NO","MinWidth","80")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_NO","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_NO","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_NO","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_LINE","Caption","Order Line")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_LINE","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_LINE","MinWidth","80")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_LINE","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_LINE","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_LINE","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","CUSTOMER","Caption","Customer")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","CUSTOMER","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","CUSTOMER","MinWidth","100")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","CUSTOMER","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","CUSTOMER","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","CUSTOMER","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","DATE_INVOICE","Caption","Invoice Date")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","DATE_INVOICE","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","DATE_INVOICE","MinWidth","100")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","DATE_INVOICE","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","DATE_INVOICE","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","DATE_INVOICE","CellHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","DATE_INVOICE","DisplayCustomDatetime","d")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","SALESPERSON","Caption","Salesperson")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","SALESPERSON","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","SALESPERSON","MinWidth","100")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","SALESPERSON","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","SALESPERSON","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","SALESPERSON","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PART","Caption","Part")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PART","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PART","MinWidth","120")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PART","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PART","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PART","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PRODUCT_LINE","Caption","PL")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PRODUCT_LINE","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PRODUCT_LINE","MinWidth","80")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PRODUCT_LINE","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PRODUCT_LINE","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","PRODUCT_LINE","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","COMMISSION_TYPE","Caption","Commission Type")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","COMMISSION_TYPE","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","COMMISSION_TYPE","MinWidth","120")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","COMMISSION_TYPE","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","COMMISSION_TYPE","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","COMMISSION_TYPE","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","EXTENSION","Caption","Extension")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","EXTENSION","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","EXTENSION","MinWidth","120")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","EXTENSION","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","EXTENSION","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","EXTENSION","CellHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","EXTENSION","DisplayCustomNumeric","#,###,##0.00")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","Caption","Rate")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","AllowEdit",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","ReadOnly",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","MinWidth","100")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","CellHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Rate","DisplayCustomNumeric","#,###,##0.000")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","Caption","Amount")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","AllowEdit",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","ReadOnly",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","MinWidth","120")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","CellHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","Commission_Amount","DisplayCustomNumeric","#,###,##0.00")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_SUFFIX","Caption","Suffix")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_SUFFIX","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_SUFFIX","MinWidth","100")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_SUFFIX","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_SUFFIX","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","ORDER_SUFFIX","CellHAlignment","Center")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_ORDERED","Caption","Qty")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_ORDERED","AllowEdit",False)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_ORDERED","MinWidth","100")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_ORDERED","HeaderFontBold",True)
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_ORDERED","HeaderHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_ORDERED","CellHAlignment","Center")
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_ORDERED","DisplayCustomNumeric","#,###,##0.00")
+
+Gui.SS_Form1.GSGC_Comm.SetColumnProperty("GVComm","QTY_SHIPPED","Visible","False")
+
+gui.SS_Form1.GSGC_Comm.MainView("GVComm")
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndTry
+Program.Sub.loadGV_Comm.End
+
+Program.Sub.Comments.Start
+${$0$}$GCG_Multi_Commission$}$MLA$}$10/16/2012
+${$3$}$0$}$$}$-1$}$-1$}$$}$1/1/1900$}$Cadillac Products
+${$5$}$2.0.0.0$}$2
+${$6$}$bpham$}$20221213094653055$}$Di0riF4Q5RIv6jxva5zSWBaTvp+T0Dt6ZpLTBMXgI5sVZuZwLXI9wptlRVBz+w2Sv/xKZ+Zv4yg=
+Program.Sub.Comments.End
+
+Program.Sub.ScreenSS.Start
+SS_Form1{{CAPTION::Multiple Commissions
+SS_Form1.CTRL{{NAME::dtpStart\\TYPE::6\\CAPTION::Start Date\\GROUP::1\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::dtpEnd\\TYPE::6\\CAPTION::End Date\\GROUP::1\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::cmdSelect\\TYPE::5\\CAPTION::Select\\GROUP::1\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::cmdSave\\TYPE::5\\CAPTION::Save\\GROUP::2\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::cmdUpdate\\TYPE::5\\CAPTION::Update\\GROUP::2\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::cmdReport\\TYPE::5\\CAPTION::Report\\GROUP::2\\BROWSER::0\\SIZE::1
+
+Program.Sub.ScreenSS.End
